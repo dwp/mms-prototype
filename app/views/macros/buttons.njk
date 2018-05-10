@@ -1,0 +1,83 @@
+{% macro link(content, url, class) %}
+    <a class="{{ class }}" href="{{ url }}">{{ content }}</a>
+{% endmacro %}
+
+{% macro genericButton(id, content, name, type="submit") %}
+    <button id="{{ id }}" class="button" type="{{ type }}" name="{{ name }}" value="{{ id }}">{{ content }}</button>
+{% endmacro %}
+
+{% macro button2(id, content, name, type="submit") %}
+    <button id="{{ id }}" class="transfers-button-2" type="{{ type }}" name="{{ name }}" value="{{ id }}">{{ content }}</button>
+{% endmacro %}
+
+{% macro button3(id, content, name, type="submit") %}
+    <button id="{{ id }}" class="transfers-button-3" type="{{ type }}" name="{{ name }}" value="{{ id }}">{{ content }}</button>
+{% endmacro %}
+
+
+{% macro cmDashButton(id, content, amount) %}
+<div class="cm-dash-button" data-button="{{ id }}" tabindex="0">
+    <div class="cm-dash-heading">
+        <h4 class="heading-small">{{ content }}</h4>
+    </div>
+    <div class="cm-dash-number">
+        <p class="cm-num-claims">{{ amount }}</p>
+    </div>
+    <button id="{{ id }}" class="js-hidden" type="submit" name="dashboardOption" value="{{ id }}">{{ content }}</button>
+</div>
+{% endmacro %}
+
+{% macro wcDashButton(id, content, amount) %}
+<div class="wc-dash-button" data-button="{{ id }}" tabindex="0">
+    <div class="wc-dash-heading">
+        <h4 class="heading-small">{{ content }}</h4>
+    </div>
+    <div class="wc-dash-number">
+        <p class="wc-num-claims">{{ amount }}</p>
+    </div>
+    <button id="{{ id }}" class="js-hidden" type="submit" name="dashboardOption" value="{{ id }}">{{ content }}</button>
+</div>
+{% endmacro %}
+
+{% macro lmDashButton(id, content, amount, assigned) %}
+<div class="lm-dash-button" data-button="{{ id }}" tabindex="0">
+    <div class="lm-dash-heading">
+        <h4 class="heading-small">{{ content }}</h4>
+    </div>
+    <div class="lm-dash-number">
+        <p class="lm-num-claims">{{ amount }}</p>
+        {% if assigned >= 0 %}<p>assigned: {{ assigned }}</p>
+        {% else %}<p>available</p>
+        {% endif %}
+    </div>
+    <button id="{{ id }}" class="js-hidden" type="submit" name="dashboardOption" value="{{ id }}">{{ content }}</button>
+</div>
+{% endmacro %}
+
+{% macro adminDashButton(id, content, amount, percent) %}
+<div class="admin-dash-button" data-button="{{ id }}">
+    <div class="lm-dash-heading">
+        <h4 class="heading-small">{{ content }}</h4>
+    </div>
+    <div class="admin-dash-number">
+        <p class="admin-num-claims">{{ amount }}</p>
+    </div>
+    {% if percent %}
+    <div class="lm-dash-percent">
+        <p class="lm-claims-percent">{{ percent }}%</p>
+    </div>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% macro otherUserDashButton(id, caseType, content, amount) %}
+<div class="ou-dash-button" data-button="{{ id }}-{{ caseType }}" tabindex="0">
+    <div class="ou-dash-heading">
+        <h4 class="ou-dash-type">{{ content }}</h4>
+    </div>
+    <div class="ou-dash-number">
+        <p class="ou-num-claims">{{ amount }}</p>
+    </div>
+    <a id="{{ id }}-{{ caseType }}" class="js-hidden" href="/lm/view-cm-cases?user={{ id }}&caseType={{ caseType }}">{{ content }}</a>
+</div>
+{% endmacro %}

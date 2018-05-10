@@ -1,0 +1,168 @@
+{% macro userManagement(id, members, additionalField) %}
+<table class="user-management-table">
+    <thead>
+        <tr>
+            <th class="reduced-column"></th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>{{ additionalField }}</th>
+        </tr>
+    </thead>
+    <tbody id="searchableTable">
+    {% for member in members %}
+        <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}" data-search="{{ member.name }}" data-role="{% if 'Case Manager' in member.roles and 'Line Manager' in member.roles %}Deputy{% elif member.roles[0] === 'Admin'%}Administrator{% else %}{{ member.roles[0] }}{% endif %}">
+            <td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
+                <div class="multiple-choice">
+                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ member._id }}"
+                    {% if member.target %} data-target="{{ member.target }}"{% endif %}>
+                    <label for="{{ id }}-{{ loop.index }}" aria-label="{{ member.name }}">&nbsp;</label>
+                </div>
+            </td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">{{ member.name }}</td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
+                {% if 'Case Manager' in member.roles and 'Line Manager' in member.roles %}
+                    Deputy
+                {% else %}
+                    {{ member.roles[0] }}
+                {% endif %}
+            </td>
+            <td{% if member[additionalField]  %} class="table-click-helper"{% endif %} data-checkbox="{{ id }}-{{ loop.index }}">{% if member[additionalField]  %}{{ member[additionalField] }}{% else %}<a class="user-cases-link" href="/lm/view-cm-cases?user={{ member._id }}">view cases</a>{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}
+
+{% macro serviceCenterAlignment(jcps, serviceCentres) %}
+<table class="service-centre-table">
+    <thead>
+        <tr>
+            <th>Jobcentre</th>
+            <th>Service Centre</th>
+            <th>Commencement</th>
+        </tr>
+    </thead>
+    <tbody id="searchableTable">
+        {% for jcp in jcps %}
+        <tr class="list-view-table-row" data-search="{{ jcp.name }}" {% if not jcp.serviceCentre %}data-role=" "{% else %}{% for centre in serviceCentres %}{% if jcp.serviceCentre.name === centre.name %}data-role="{{ centre.name }}"{% endif %}{% endfor %}{% endif %}>
+            <td><a class="list-view-link" href="/admin/align-centres/{{ jcp.name }}">{{ jcp.name }}</a></td>
+            <td>
+                {% if not jcp.serviceCentre %}&nbsp;
+                {% else %}
+                {% for centre in serviceCentres %}
+                {% if jcp.serviceCentre.name === centre.name %}
+                {{ centre.name }}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {{ jcp.commencement | asReadableDate }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}
+
+{% macro serviceCenterAlignmentViewOnly(jcps, serviceCentres) %}
+<table class="service-centre-table">
+    <thead>
+        <tr>
+            <th>Jobcentre</th>
+            <th>Service Centre</th>
+            <th>Commencement</th>
+        </tr>
+    </thead>
+    <tbody id="searchableTable">
+        {% for jcp in jcps %}
+        <tr data-search="{{ jcp.name }}" {% if not jcp.serviceCentre %}data-role=" "{% else %}{% for centre in serviceCentres %}{% if jcp.serviceCentre.name === centre.name %}data-role="{{ centre.name }}"{% endif %}{% endfor %}{% endif %}>
+            <td>{{ jcp.name }}</td>
+            <td>
+                {% if not jcp.serviceCentre %}&nbsp;
+                {% else %}
+                {% for centre in serviceCentres %}
+                {% if jcp.serviceCentre.name === centre.name %}
+                {{ centre.name }}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {{ jcp.commencement | asReadableDate }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}
+
+{% macro jcpMi(data) %}
+{% set toolTips = [null,
+    "Every case for this jobcentre.",
+    "Cases are no longer on live service, and were never completed within TMS.",
+    "Cases that have either been transferred to Full Service or closed due to NDE or non-compliance.",
+    "Cases where a Call to action has been issued.",
+    "Cases where a Call to action has not been issued.",
+    "Cases where a Digital Account has been created.",
+    "Cases where an IEI has not been booked.",
+    "Cases where an IEI has been booked but not attended.",
+    "Cases where an IEI has been attended and are awaiting their first payment."]
+%}
+
+<table class="jcp-mi-table">
+    <caption class="jcp-mi-table-caption">All cases</caption>
+    <thead>
+        <tr>
+            <th>Case Type</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, value in data %}
+        {% if loop.index <= 3 %}
+            <tr>
+                <td>
+                    <div class="table-more-info-wrapper">
+                        <img class="table-more-info" src="/images/question.svg" alt="more information">
+                        <div class="table-more-info-details">
+                            <p class="table-tooltip">{{ toolTips[loop.index] }}</p>
+                        </div>
+                    </div>
+                    {{ key }}
+                </td>
+                <td>{{ value }}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<table class="jcp-mi-table">
+    <caption class="jcp-mi-table-caption">Cases in transit</caption>
+    <thead>
+        <tr>
+            <th>Case Type</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, value in data %}
+        {% if loop.index > 3 %}
+            <tr>
+                <td>
+                    <div class="table-more-info-wrapper">
+                        <img class="table-more-info" src="/images/question.svg" alt="more information">
+                        <div class="table-more-info-details">
+                            <p class="table-tooltip">{{ toolTips[loop.index] }}</p>
+                        </div>
+                    </div>
+                    {{ key }}
+                </td>
+                <td>{{ value }}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}

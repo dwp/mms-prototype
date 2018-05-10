@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% import 'macros/typography.njk' as typography %}
+{% import 'macros/forms.njk' as forms %}
+{% import 'macros/tables.njk' as tables %}
+{% import 'macros/errors.njk' as errorSummary %}
+{% import 'macros/success.njk' as successSummary %}
+
+{% block page_title %}
+    UC Transfers - Manage users
+{% endblock %}
+
+{% block content %}
+<div class="flex-wrapper" role="main">
+
+    <div class="side-bar">
+        {% include 'partials/sidebar/search.njk' %}
+    </div>
+
+    <main role="main" class="main-section">
+        <div class="grid-row">
+            <form class="form" action="/admin/manage-users" method="post" autocomplete="off">
+
+                <div class="column-two-thirds">
+                    {% if errors %}
+                    {{ errorSummary.errorSummary(errors) }}
+                    {% endif %}
+
+                    {% if successes %}
+                    {{ successSummary.successSummary(successes) }}
+                    {% endif %}
+
+                    {{ typography.mainHeading('Manage users') }}
+                    {{ typography.lede('Remove and amend users of the Transfers Management System') }}
+                </div>
+
+                <div class="column-two-thirds">
+                    {{ tables.userManagement('userSelect', allUsers, 'email') }}
+                    {{ forms.hiddenInput('_csrf', _csrf) }}
+                </div>
+                <div class="column-third">
+                    <div id="stickyWrapperAnchor"></div>
+                    <div id="stickyWrapper">
+                        <hr class="user-management-rule">
+                        {{ forms.selectInput('selectReducer', 'Filter by role', [
+                            {value: 'noFilter', label: 'No filter'},
+                            {value: 'Administrator', label: 'Administrators'},
+                            {value: 'Line Manager', label: 'Line Managers'},
+                            {value: 'Deputy', label: 'Deputies'},
+                            {value: 'Case Manager', label: 'Case Managers'},
+                            {value: 'Work Coach', label: 'Work Coaches'},
+                            {value: 'WC Manager', label: 'WC Managers'},
+                            {value: 'Reporter', label: 'Reporters'}
+                        ], errors.selectReducer, true, false, 'full', false, true)}}
+                        {{ forms.textInput('searchReducer', 'Filter    by name', '', false, false, false, false, 'full')}}
+                        <hr class="dividing-rule">
+                        <hr class="hidden-rule">
+                        {{ forms.selectInput('manageUsersAction', 'Choose an action', [
+                            {value: 'amendRole', label: 'Amend user role', target: 'newRoleSelect'},
+                            {value: 'makeDeputy', label: 'Assign deputyship'},
+                            {value: 'amendUser', label: 'Change user details'},
+                            {value: 'removeDeputy', label: 'Remove deputyship'},
+                            {value: 'deleteUser', label: 'Delete User'},
+                            {value: 'reactivateUser', label: 'Reactivate user'}
+                        ], errors.manageUsersAction, true, false, 'full', false, true) }}
+                        <div id="newRoleSelect" class="js-hidden">
+                            {{ forms.selectInput('newRole', 'Select new role', [
+                            {value: 'Admin', label: 'Administrator'},
+                            {value: 'Line Manager', label: 'Line Manager'},
+                            {value: 'Case Manager', label: 'Case Manager'},
+                            {value: 'Work Coach', label: 'Work Coach'},
+                            {value: 'WC Manager', label: 'WC Manager'},
+                            {value: 'Reporter', label: 'Reporter'}
+                            ], errors.newRole, true, false, 'full', false, true) }}
+                        </div>
+                        {{ forms.submitInput('Submit')}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</div>
+{% endblock %}
