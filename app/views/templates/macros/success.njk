@@ -1,0 +1,17 @@
+{% macro successSummary(successes) %}
+<div class="success-summary" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+
+  <h2 class="heading-medium success-summary-heading" id="successSummary">
+    Action complete
+  </h2>
+
+  <p>The following action has been completed:</p>
+
+  <ul class="success-summary-list">
+      {% for key, value in successes %}
+      <li>{{ value.msg | safe }}</li>
+      {% endfor %}
+  </ul>
+
+</div>
+{% endmacro %}

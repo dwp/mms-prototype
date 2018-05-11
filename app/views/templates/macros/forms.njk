@@ -1,0 +1,327 @@
+{% macro hiddenInput(id, value) %}
+<input id="{{ id }}" type="hidden" name="{{ id }}" value="{{ value }}">
+{% endmacro %}
+
+{% macro textInput(id, label, value, error, related, hintText, readonly, size, ieHidden) %}
+<div class="{% if ieHidden %}ie-hidden {% endif %}form-group{% if related %}-related{% endif %}{% if error %} form-group-error{% endif %}">
+    <label class="form-label-bold block-label" for="{{ id }}">{{ label }}
+        {% if hintText %}
+            <span class="form-hint">
+                {{ hintText }}
+            </span>
+        {% endif %}
+        {% if error %}
+            <span class="error-message">{{ error.msg }}</span>
+        {% endif %}
+        <input id="{{ id }}" class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %} block-input" type="text" name="{{ id }}" value="{{ value }}" {% if readonly %}readonly{% endif %}>
+    </label>
+</div>
+{% endmacro %}
+
+{% macro passwordInput(id, label, value, error, related, hintText, readonly, size, ieHidden) %}
+<div class="{% if ieHidden %}ie-hidden {% endif %}form-group{% if related %}-related{% endif %}{% if error %} form-group-error{% endif %}">
+    <label class="form-label-bold block-label" for="{{ id }}">{{ label }}
+        {% if hintText %}
+            <span class="form-hint">
+                {{ hintText }}
+            </span>
+        {% endif %}
+        {% if error %}
+            <span class="error-message">{{ error.msg }}</span>
+        {% endif %}
+        <input id="{{ id }}" class="{% if ieHidden %}ie-hidden {% endif %}form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %} block-input" type="password" name="{{ id }}" value="{{ value }}" {% if readonly %}readonly{% endif %}>
+    </label>
+</div>
+{% endmacro %}
+
+{% macro fileInput(id, label, value, error, related, hintText) %}
+<div class="form-group{% if related %}-related{% endif %} {% if error %}form-group-error{% endif %}">
+    <label class="form-label-bold block-label" for="{{ id }}">
+        {{ label }}
+    </label>
+    {% if hintText %}
+        <span class="form-hint">
+            {{ hintText }}
+        </span>
+    {% endif %}
+    {% if error %}
+        <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    <input id="{{ id }}" name="{{ id }}" type="file">
+</div>
+{% endmacro %}
+
+{% macro selectInput(id, label, values, error, related, hintText, size, details, alwaysSelect, readonly) %}
+<div class="form-group{% if related %}-related{% endif %} {% if error %}form-group-error{% endif %}">
+<label class="form-label-bold" for="{{ id }}">{{ label }}</label>
+{% if hintText %}
+    <span class="form-hint">
+        {{ hintText }}
+    </span>
+{% endif %}
+{% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+{% endif %}
+<select id="{{ id }}" class="form-control {% if error %} form-control-error{% endif %} {% if size %}form-control-{{ size }}{% endif %}" name="{{ id }}" {% if readonly %}disabled{% endif %}>
+    {% if values.length !== 1 or alwaysSelect %}
+    <option value="" disabled selected>Select an option</option>
+    {% endif %}
+    {% for item in values %}
+    {% if item.label %}
+        <option value="{{ item.value }}" {% if details === item.value %} selected{% endif %}{% if item.target %} data-target="{{ item.target }}"{% endif %}>{{ item.label }}</option>
+    {% else %}
+        <option value="{{ item }}" {% if details === item %} selected{% endif %}{% if item.target %} data-target="{{ item.target }}"{% endif %}>{{ item }}</option>
+    {% endif %}
+    {% endfor %}
+</select>
+</div>
+{% endmacro %}
+
+{% macro searchReducerInput(id, label, firstValue, values, lastValue,  error, related, hintText, size, details, alwaysSelect, readonly) %}
+<div class="form-group{% if related %}-related{% endif %} {% if error %}form-group-error{% endif %}">
+<label class="form-label-bold" for="{{ id }}">{{ label }}</label>
+{% if hintText %}
+    <span class="form-hint">
+        {{ hintText }}
+    </span>
+{% endif %}
+{% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+{% endif %}
+<select id="{{ id }}" class="form-control {% if error %} form-control-error{% endif %} {% if size %}form-control-{{ size }}{% endif %}" name="{{ id }}" {% if readonly %}disabled{% endif %}>
+    {% if values.length !== 1 or alwaysSelect %}
+    <option value="" disabled selected>Select an option</option>
+    {% endif %}
+    <option value="{{ firstValue.value }}" {% if details === firstValue.value %} selected{% endif %}>{{ firstValue.label }}</option>
+    {% for item in values %}
+        <option value="{{ item }}" {% if details === item %} selected{% endif %}>{{ item }}</option>
+    {% endfor %}
+    <option value="{{ lastValue.value }}" {% if details === lastValue.value %} selected{% endif %}>{{ lastValue.label }}</option>
+</select>
+</div>
+{% endmacro %}
+
+{% macro submitInput(value, type, name) %}
+<input {% if name %}id="{{ name }}" name="{{ name }}"{% endif %}class="button {% if type %}{{ type }}{% endif %}" type="submit" name="submit" value="{{ value }}">
+{% endmacro %}
+
+{% macro checkboxSingle(id, labelMain, labelCheckbox, value, error, related, hintText, checked) %}
+<div class="form-group">
+    <fieldset>
+        <legend>
+        <h3 class="form-label-bold">{{ labelMain }}</h3>
+        {% if hintText %}
+            <span class="form-hint">
+                {{ hintText }}
+            </span>
+        {% endif %}
+        </legend>
+        <div class="multiple-choice form-group{% if related %}-related{% endif %}">
+            <input id="{{ id }}" name="{{ id }}" type="checkbox" value="{{ value }}" {% if checked %}checked{% endif %}>
+            <label for="{{ id }}">{{ labelCheckbox }}</label>
+            {% if error %}
+                <span class="error-message">{{ error.msg }}</span>
+            {% endif %}
+        </div>
+    </fieldset>
+</div>
+{% endmacro %}
+
+{% macro checkButtons(id, label, error, inline, checkboxes, hintText, isDraggable) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <fieldset {% if inline %}class="inline"{% endif %}>
+    <legend class="form-label-bold">{{ label }}</legend>
+    {% if hintText %}
+        <span class="form-hint">
+            {{ hintText }}
+        </span>
+    {% endif %}
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    {% for item in checkboxes %}
+    <div class="multiple-choice{% if isDraggable %} drag-to-select{% endif %}"{% if isDraggable %}data-click="{{ id }}-{{ loop.index }}"{% endif %}>
+        <input id="{{ id }}-{{ loop.index }}" {% if isDraggable %} class="multi-select-checkbox"{% endif %} type="checkbox" name="{{ id }}" value="{{ item.value }}"
+        {% if item.target %} data-target="{{ item.target }}"{% endif %}>
+        <label for="{{ id }}-{{ loop.index }}">{{ item.label }}</label>
+    </div>
+    {% endfor %}
+</fieldset>
+</div>
+{% endmacro %}
+
+{% macro myTeamCheckboxes(id, label, error, inline, checkboxes, showCases, isDraggable) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <fieldset id="{{ id }}" {% if inline %}class="inline"{% endif %}>
+    <legend class="form-label-bold">{{ label }}</legend>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    {% for item in checkboxes %}
+    <div class="multiple-choice{% if isDraggable %} drag-to-select{% endif %}"{% if isDraggable %}data-click="{{ id }}-{{ loop.index }}"{% endif %}>
+        <input id="{{ id }}-{{ loop.index }}" {% if isDraggable %} class="multi-select-checkbox"{% endif %} type="checkbox" name="{{ id }}" value="{{ item._id }}"
+        {% if item.target %} data-target="{{ item.target }}"{% endif %}>
+        {% if showCases %}
+        <label for="{{ id }}-{{ loop.index }}">{{ item.name + ' (' + item.cases + ' cases)'}}</label>
+        {% else %}
+        <label for="{{ id }}-{{ loop.index }}">{{ item.name }}</label>
+        {% endif %}
+    </div>
+    {% endfor %}
+</fieldset>
+</div>
+{% endmacro %}
+
+{% macro myTeamSelect(id, label, details, error, options, size, disabled) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <label class="form-label-bold" for="{{ id }}">{{ label }}</label>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    <select id="{{ id }}" class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %}" name="{{ id }}" {% if disabled %} disabled{% endif %}>
+        <option value="" disabled selected>Select an option</option>
+        {% for item in options %}
+            <option value="{{ item._id }}"{% if details === item._id %} selected{% endif %}>{{ item.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endmacro %}
+
+{% macro viewUserSelect(id, label, details, error, options, size, disabled, csrf, caseType) %}
+<form class="view-user-select-form" action="/lm/view-user-switch" method="post">
+    <div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <label class="visually-hidden" for="{{ id }}">{{ label }}</label>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    <select id="{{ id }}" class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %} view-user-select" name="{{ id }}" {% if disabled %} disabled{% endif %}>
+        <option value="" disabled selected>Select an option</option>
+        {% for item in options %}
+            <option value="{{ item._id }}"{% if details === item._id %} selected{% endif %}>{{ item.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
+    {% if caseType %}
+    <input id="typeToView" type="hidden" name="typeToView" value="{{ caseType }}">
+    {% endif %}
+    <input type="submit" class="button view-user-button" value="change">
+</div>
+
+</form>
+{% endmacro %}
+
+{# Specific for control sheet #}
+{% macro csTextInput(id, label, value, error, size, readonly) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <label class="form-label block-label" for="{{ id }}">{{ label }}
+        {% if error %}
+            <span class="error-message">{{ error.msg }}</span>
+        {% endif %}
+        <input id="{{ id }}" class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %} block-input" type="text" name="{{ id }}" value="{{ value }}" data-original="{{ value }}"{% if readonly %}readonly{% endif %}>
+    </label>
+</div>
+{% endmacro %}
+
+{% macro csRadioButtons(id, label, details, error, inline, radios) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <fieldset {% if inline %}class="inline"{% endif %}>
+    <legend class="form-label">{{ label }}</legend>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    {% for item in radios %}
+    <div class="multiple-choice">
+        <input id="{{ id }}-{{ loop.index }}" type="radio" name="{{ id }}" value="{{ item.value }}"
+        {% if item.target %} data-target="{{ item.target }}"{% endif %}{% if details === item.value %} checked="checked"{% endif %} data-original="{{ details }}">
+        <label for="{{ id }}-{{ loop.index }}">{{ item.label }}</label>
+    </div>
+    {% endfor %}
+</fieldset>
+</div>
+{% endmacro %}
+
+{% macro csCheckButtons(id, label, details, error, inline, checkboxes) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <fieldset id="{{ id }}"{% if inline %}class="inline"{% endif %}>
+    <legend class="form-label">{{ label }}</legend>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    {% for item in checkboxes %}
+    <div class="multiple-choice">
+        <input id="{{ id }}-{{ loop.index }}" type="checkbox" name="{{ id }}" value="{{ item.value }}"
+        {% if item.target %} data-target="{{ item.target }}"{% endif %}{% if details === item.value %} checked="checked"{% endif %} data-original="{{ details }}">
+        <label for="{{ id }}-{{ loop.index }}">{{ item.label }}</label>
+    </div>
+    {% endfor %}
+</fieldset>
+</div>
+{% endmacro %}
+
+{% macro csSelectInput(id, label, details, error, options, size) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <label class="form-label" for="{{ id }}">{{ label }}</label>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    <select id="{{ id }}" class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %}" name="{{ id }}" data-original="{{ details }}">
+        <option value="" disabled selected>Select an option</option>
+        {% for item in options %}
+        {# Not sure why I used the first way with a seperate value as they appear to always be the same #}
+            {% if item.value %}
+                <option value="{{ item.value }}"{% if details === item.value %} selected{% endif %}>{{ item.label }}</option>
+            {% else %}
+                <option value="{{ item }}"{% if details === item %} selected{% endif %}>{{ item }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
+{% endmacro %}
+
+{# Date will need to be done like this as firefox does not supprt type=date - will make a js date picker to overwrite #}
+{% macro csDateInput(id, label, value, error, size, readonly) %}
+<div class="form-group-related{% if error[1] or error[2] or error[3] %} form-group-error{% endif %} fallback-date-input js-hidden">
+  <fieldset>
+    <legend>
+      <span class="form-label">
+        {{ label }}
+      </span>
+      {% if error[1] or error[2] or error[3] %}
+      <span class="error-message">{{ error[1].msg }}</span>
+      <span class="error-message">{{ error[2].msg }}</span>
+      <span class="error-message">{{ error[3].msg }}</span>
+      {% endif %}
+    </legend>
+    <div class="form-date">
+      <div class="form-group form-group-day">
+        <label class="form-label visually-hidden" for="{{ id }}-day">{{ label }} days</label>
+        {# Checks to see if valid date object else error would be thrown #}
+        <input class="form-control js-disabled-date{% if error[1] %} form-control-error{% endif %}" id="{{ id }}-day" name="{{ id }}-day" value="{% if value.getDate %}{{ value.getDate() }}{% endif %}" type="number"{% if readonly %} readonly{% endif %}>
+      </div>
+      <div class="form-group form-group-month">
+        <label class="form-label visually-hidden" for="{{ id }}-month">{{ label }} month</label>
+        <input class="form-control js-disabled-date{% if error[2] %} form-control-error{% endif %}" id="{{ id }}-month" name="{{ id }}-month" value="{% if value.getMonth %}{{ value.getMonth() + 1}}{% endif %}" type="number"{% if readonly %} readonly{% endif %}>
+      </div>
+      <div class="form-group form-group-year">
+        <label class="form-label visually-hidden" for="{{ id }}-year">{{ label }} year</label>
+        <input class="form-control js-disabled-date{% if error[3] %} form-control-error{% endif %}" id="{{ id }}-year" name="{{ id }}-year" value="{% if value.getFullYear %}{{ value.getFullYear() }}{% endif %}" type="number"{% if readonly %} readonly{% endif %}>
+      </div>
+    </div>
+  </fieldset>
+</div>
+{% endmacro %}
+
+{% macro csCmInput(id, label, details, error, options, size, disabled) %}
+<div class="form-group-related{% if error %} form-group-error{% endif %}">
+    <label class="form-label" for="{{ id }}">{{ label }}</label>
+    {% if error %}
+    <span class="error-message">{{ error.msg }}</span>
+    {% endif %}
+    <select id="{{ id }}" class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if error %} form-control-error{% endif %}" name="{{ id }}" data-original="{{ details }}"{% if disabled %} disabled{% endif %}>
+        <option value="" disabled selected>Unassigned</option>
+        {% for item in options %}
+            <option value="{{ item._id }}"{% if details === item._id %} selected{% endif %}>{{ item.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endmacro %}

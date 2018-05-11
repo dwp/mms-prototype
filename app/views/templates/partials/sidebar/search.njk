@@ -1,0 +1,24 @@
+<div class="">
+    <form class="" action="/sidebar-search" method="post" autocomplete="off">
+        <div class="form-group-related{% if errors.searchNino %} form-group-error{% endif %}">
+            <label class="form-label" for="searchNino">Search by NINO</label>
+            {% if errors.searchNino %}
+            <span class="error-message">{{ errors.searchNino.msg }}</span>
+            {% endif %}
+            <input class="form-control sidebar-input" id="searchNino" name="searchNino" type="text">
+        </div>
+        <div class="form-group-related{% if errors.searchName %} form-group-error{% endif %}">
+          <label class="form-label" for="searchName">Search by name</label>
+          {% if errors.searchName %}
+          <span class="error-message">{{ errors.searchName.msg }}</span>
+          {% endif %}
+          <input class="form-control sidebar-input" id="searchName" value="" name="searchName" type="text">
+        </div>
+
+        {{ forms.hiddenInput('_csrf', _csrf) }}
+
+        <div class="sidebar-button-wrapper">
+            <input type="submit" class="transfers-button-2 sidebar-button" name="" value="Go">
+        </div>
+    </form>
+</div>

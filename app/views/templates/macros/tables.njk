@@ -1,0 +1,68 @@
+{% macro customerManagement(customers) %}
+<table class="user-management-table">
+    <thead>
+        <tr>
+            <th class="reduced-column"></th>
+            <th>Name</th>
+            <th>NINo</th>
+        </tr>
+    </thead>
+    <tbody id="searchableTable">
+    {% for customer in customers %}
+        <tr class="drag-to-select">
+					<td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
+						<div class="multiple-choice">
+							<input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}">
+							<label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.firstName }}">
+								&nbsp;
+							</label>
+						</div>
+					</td>
+          <td class="table-click-helper">
+						{{ customer.lastName }} {{ customer.firstName }}
+					</td>
+					<td class="table-click-helper">
+						{{ customer.nino }}
+					</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endmacro %}
+
+
+{% macro userManagement(id, members, additionalField) %}
+<table class="user-management-table">
+    <thead>
+        <tr>
+            <th class="reduced-column"></th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>{{ additionalField }}</th>
+        </tr>
+    </thead>
+    <tbody id="searchableTable">
+    {% for member in members %}
+        <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}" data-search="{{ member.name }}" data-role="{% if 'Case Manager' in member.roles and 'Line Manager' in member.roles %}Deputy{% elif member.roles[0] === 'Admin'%}Administrator{% else %}{{ member.roles[0] }}{% endif %}">
+            <td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
+                <div class="multiple-choice">
+                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ member._id }}"
+                    {% if member.target %} data-target="{{ member.target }}"{% endif %}>
+                    <label for="{{ id }}-{{ loop.index }}" aria-label="{{ member.name }}">&nbsp;</label>
+                </div>
+            </td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">{{ member.name }}</td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
+                {% if 'Case Manager' in member.roles and 'Line Manager' in member.roles %}
+                    Deputy
+                {% else %}
+                    {{ member.roles[0] }}
+                {% endif %}
+            </td>
+            <td{% if member[additionalField]  %} class="table-click-helper"{% endif %} data-checkbox="{{ id }}-{{ loop.index }}">{% if member[additionalField]  %}{{ member[additionalField] }}{% else %}<a class="user-cases-link" href="/lm/view-cm-cases?user={{ member._id }}">view cases</a>{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}

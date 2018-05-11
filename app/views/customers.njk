@@ -1,0 +1,42 @@
+{% extends "templates/macros/layout.njk" %}
+
+{% import 'templates/macros/forms.njk' as forms %}
+{% import 'templates/macros/tables.njk' as tables %}
+{% import 'templates/macros/typography.njk' as typography %}
+{% import 'templates/macros/errors.njk' as errorSummary %}
+{% import 'templates/macros/success.njk' as successSummary %}
+
+{% block page_title %}
+    UC Migrate - Manage customers
+{% endblock %}
+
+{% block content %}
+<div class="flex-wrapper" role="main">
+    <main role="main" class="main-section">
+        {# {{ customers | dump }} #}
+        <div class="grid-row">
+            <form class="form" action="/admin/manage-users" method="post" autocomplete="off">
+
+                <div class="column-two-thirds">
+                    {% if errors %}
+                    {{ errorSummary.errorSummary(errors) }}
+                    {% endif %}
+
+                    {% if successes %}
+                    {{ successSummary.successSummary(successes) }}
+                    {% endif %}
+
+                    {{ typography.mainHeading('Manage users') }}
+                    {{ typography.lede('Remove and amend users of the Transfers Management System') }}
+                </div>
+
+                <div class="column-two-thirds">
+                    {{ tables.customerManagement(customers) }}
+                    {{ forms.hiddenInput('_csrf', _csrf) }}
+                </div>
+            </form>
+        </div>
+    </main>
+
+</div>
+{% endblock %}

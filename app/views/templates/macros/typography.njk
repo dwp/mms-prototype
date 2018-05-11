@@ -1,0 +1,15 @@
+{% macro mainHeading(content) %}
+<h1 class="heading-xlarge">{{ content }}</h1>
+{% endmacro %}
+
+{% macro heading(size, class, content) %}
+<h{{ size }} class="{{ class }}">{{ content }}</h{{ size }}>
+{% endmacro %}
+
+{% macro lede(content) %}
+<p class="lede">{{content}}</p>
+{% endmacro %}
+
+{% macro paragraph(content) %}
+<p>{{ content }}</p>
+{% endmacro %}
