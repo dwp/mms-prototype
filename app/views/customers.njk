@@ -18,7 +18,7 @@
     <main role="main" class="main-section">
         <div class="grid-row">
             <form class="form" action="/admin/manage-users" method="post" autocomplete="off">
-
+                
                 <div class="column-two-thirds">
                     {% if errors %}
                     {{ errorSummary.errorSummary(errors) }}
@@ -32,7 +32,18 @@
                     {{ typography.lede('Remove and amend users of the Transfers Management System') }}
                 </div>
 
-                <div>
+                <div class="column-full">
+                    <div class="column-half">
+                        {{ forms.textInput('searchReducer', 'Filter list by name', '', false, false, false, false, 'full')}}
+                    </div>
+                    <div class="column-half">
+                        {{ forms.selectInput('manageUsersAction', 'Choose an action', [
+                            {value: 'amendUser', label: 'Update user details'},
+                            {value: 'deleteUser', label: 'Delete User'},
+                            {value: 'reactivateUser', label: 'Reactivate user'}
+                        ], errors.manageUsersAction, true, false, 'full', false, true) }}
+                        {{ forms.submitInput('Submit')}}
+                    </div>
                     {{ tables.customerList(customers) }}
                     {{ forms.hiddenInput('_csrf', _csrf) }}
                 </div>

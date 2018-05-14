@@ -13,33 +13,33 @@
     </thead>
     <tbody id="searchableTable">
     {% for customer in customers %}
-        <tr class="drag-to-select">
-					<td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
-						<div class="multiple-choice">
-							<input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}">
-							<label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.lastName }}">
-								&nbsp;
-							</label>
-						</div>
-					</td>
-          <td class="table-click-helper">
-						{{ customer.lastName }} {{ customer.firstName }}
-					</td>
-					<td class="table-click-helper">
-						{{ customer.nino }}
-					</td>
-                    <td class="table-click-helper">
-						{{ customer.phone }}
-					</td>
-                    <td class="table-click-helper">
-						{{ customer.address.street }}
-					</td>
-                    <td class="table-click-helper">
-						{{ customer.address.city }}
-					</td>
-                    <td class="table-click-helper">
-						{{ customer.address.county }}
-					</td>
+        <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}" data-search="{{ customer.lastName }} {{ customer.firstName }}">
+            <td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
+                <div class="multiple-choice">
+                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ customer._id }}">
+                    <label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.lastName }}">
+                        &nbsp;
+                    </label>
+                </div>
+            </td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
+				{{ customer.lastName }} {{ customer.firstName }}
+            </td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
+                {{ customer.nino }}
+            </td>
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
+                {{ customer.phone }}
+            </td>
+            <td class="table-click-helper">
+                {{ customer.address.street }}
+            </td>
+            <td class="table-click-helper">
+                {{ customer.address.city }}
+            </td>
+            <td class="table-click-helper">
+                {{ customer.address.county }}
+            </td>
         </tr>
     {% endfor %}
     </tbody>
