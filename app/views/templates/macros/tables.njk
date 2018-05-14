@@ -1,10 +1,14 @@
-{% macro customerManagement(customers) %}
+{% macro customerList(customers) %}
 <table class="user-management-table">
     <thead>
         <tr>
             <th class="reduced-column"></th>
             <th>Name</th>
             <th>NINo</th>
+            <th>Phone</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>County</th>
         </tr>
     </thead>
     <tbody id="searchableTable">
@@ -13,7 +17,7 @@
 					<td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
 						<div class="multiple-choice">
 							<input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}">
-							<label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.firstName }}">
+							<label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.lastName }}">
 								&nbsp;
 							</label>
 						</div>
@@ -23,6 +27,18 @@
 					</td>
 					<td class="table-click-helper">
 						{{ customer.nino }}
+					</td>
+                    <td class="table-click-helper">
+						{{ customer.phone }}
+					</td>
+                    <td class="table-click-helper">
+						{{ customer.address.street }}
+					</td>
+                    <td class="table-click-helper">
+						{{ customer.address.city }}
+					</td>
+                    <td class="table-click-helper">
+						{{ customer.address.county }}
 					</td>
         </tr>
     {% endfor %}

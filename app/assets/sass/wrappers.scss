@@ -1,0 +1,170 @@
+.flex-wrapper {
+  margin: 0;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.prev-up-wrapper {
+  border-bottom: 1px solid $grey-1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 1rem 0 0;
+}
+
+.file-upload-wrapper {
+  margin-bottom: 1.5 * $gutter;
+}
+
+.control-sheet-tab-wrapper {
+  background-color: $grey-4;
+  border: 1px solid $grey-1;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0 0 3rem;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  width: 100%;
+}
+
+@media screen and (max-width: 750px) {
+  .control-sheet-tab-wrapper {
+      flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .control-sheet-tab-wrapper {
+      margin: 0;
+      width: 100%;
+  }
+}
+
+.flex-wrapper-cm-dashboard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 1rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .flex-wrapper-cm-dashboard {
+      flex-wrap: wrap;
+  }
+}
+
+.flex-wrapper-cm-dashboard:first-of-type {
+  margin-top: 3vh;
+}
+
+.flex-wrapper-lm-dashboard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 2.8rem 1rem 1rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .flex-wrapper-lm-dashboard {
+      flex-wrap: wrap;
+  }
+}
+
+.lm-options {
+  text-align: center;
+  padding: 2rem 3rem;
+}
+
+.fixed-wrapper {
+  position: fixed;
+  top: 0;
+  width: 25%;
+}
+
+.absolute-wrapper {
+  position: absolute;
+  width: 25%;
+  // top position set in javascript
+}
+
+.fixed-bottom-wrapper {
+  background-color: $grey-4;
+  border-top: 1px solid $black;
+  z-index: 1;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  width: 85%;
+  position: fixed;
+  bottom: 0;
+  left: 16%;
+}
+
+.on-top-sidebar {
+  z-index: 2;
+}
+
+@media screen and (max-width: 1000px) {
+  .fixed-bottom-wrapper {
+      left: 21%;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .fixed-bottom-wrapper {
+      left: 0;
+      width: 105vw;
+  }
+}
+
+.additional-margin {
+  margin-bottom: 400px;
+}
+
+@media screen and (max-width: 800px) {
+  .additional-margin {
+      margin-bottom: 450px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .additional-margin {
+      margin-bottom: 550px;
+  }
+}
+
+.pagination-wrapper {
+  text-align: center;
+  margin-top: .5rem;
+  background-color: $grey-3;
+  border-radius: 3px;
+  border: 1px solid $grey-2;
+}
+
+.previous-upload-details-wrapper {
+  margin-bottom: 5rem;
+}
+
+.claim-closure-tab {
+  border: 1px solid $black;
+  margin-bottom: $gutter;
+  padding: 0 2rem 1rem;
+}
+
+.claim-closure-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.claim-closure-section {
+  width: 100%;
+  border: 1px solid $black;
+  background-color: $grey-4;
+  padding: 0 2rem;
+  border-radius: 5px;
+  margin: 1rem;
+}
