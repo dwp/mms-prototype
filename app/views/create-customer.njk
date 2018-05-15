@@ -1,0 +1,48 @@
+{% extends "templates/macros/layout.njk" %}
+
+{% import 'templates/macros/forms.njk' as forms %}
+{% import 'templates/macros/tables.njk' as tables %}
+{% import 'templates/macros/typography.njk' as typography %}
+{% import 'templates/macros/errors.njk' as errorSummary %}
+{% import 'templates/macros/success.njk' as successSummary %}
+
+{% block page_title %}
+    UC Migrate - New customer
+{% endblock %}
+
+{% block content %}
+<div class="flex-wrapper" role="main">
+    <div class="side-bar">
+    </div>
+
+    <main role="main" class="main-section">
+        <div class="grid-row">
+          <form class="form" action="/create-customer" method="POST">
+                <div class="column-two-thirds">
+                    {% if errors %}
+                    {{ errorSummary.errorSummary(errors) }}
+                    {% endif %}
+
+                    {% if successes %}
+                    {{ successSummary.successSummary(successes) }}
+                    {% endif %}
+
+                    {{ typography.mainHeading('New Customer') }}
+                    {{ typography.lede('Add the details of a new customer') }}
+                </div>
+                <div class="column-two-thirds">
+                    {{ forms.textInput('lastName', 'Last name', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('firstName', 'First name', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('nino', 'NiNo', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('phone', 'Phone', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('street', 'Street', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('city', 'City', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('county', 'County', '', false, false, false, false, 'full')}}
+                    {{ forms.submitInput('Submit') }}
+                </div>
+          </form>
+        </div>
+    </main>
+
+</div>
+{% endblock %}

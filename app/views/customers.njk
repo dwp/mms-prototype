@@ -12,8 +12,16 @@
 
 {% block content %}
 <div class="flex-wrapper" role="main">
-		<div class="side-bar">
-      {% include 'templates/partials/sidebar/search.njk' %}
+	<div class="side-bar">
+        {{ forms.textInput('searchReducer', 'Filter list by name', '', false, false, false, false, 'full')}}
+        <hr class="dividing-rule">
+        {{ forms.selectInput('manageUsersAction', 'Choose an action', [
+            {value: 'createCustomer', label: 'Create new customer'},
+            {value: 'amendUser', label: 'Update user details'},
+            {value: 'deleteUser', label: 'Delete User'},
+            {value: 'reactivateUser', label: 'Reactivate user'}
+        ], errors.manageUsersAction, true, false, 'full', false, true) }}
+        {{ forms.submitInput('Submit')}}
     </div>
     <main role="main" class="main-section">
         <div class="grid-row">
@@ -28,22 +36,11 @@
                     {{ successSummary.successSummary(successes) }}
                     {% endif %}
 
-                    {{ typography.mainHeading('Manage users') }}
-                    {{ typography.lede('Remove and amend users of the Transfers Management System') }}
+                    {{ typography.mainHeading('Manage customers') }}
+                    {{ typography.lede('Remove and amend customers of MMS') }}
                 </div>
 
                 <div class="column-full">
-                    <div class="column-half">
-                        {{ forms.textInput('searchReducer', 'Filter list by name', '', false, false, false, false, 'full')}}
-                    </div>
-                    <div class="column-half">
-                        {{ forms.selectInput('manageUsersAction', 'Choose an action', [
-                            {value: 'amendUser', label: 'Update user details'},
-                            {value: 'deleteUser', label: 'Delete User'},
-                            {value: 'reactivateUser', label: 'Reactivate user'}
-                        ], errors.manageUsersAction, true, false, 'full', false, true) }}
-                        {{ forms.submitInput('Submit')}}
-                    </div>
                     {{ tables.customerList(customers) }}
                     {{ forms.hiddenInput('_csrf', _csrf) }}
                 </div>

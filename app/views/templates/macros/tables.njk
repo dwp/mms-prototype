@@ -16,7 +16,8 @@
         <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}" data-search="{{ customer.lastName }} {{ customer.firstName }}">
             <td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
                 <div class="multiple-choice">
-                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ customer._id }}">
+                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ customer._id }}"
+                    {% if customer.target %} data-target="{{ customer.target }}"{% endif %}>
                     <label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.lastName }}">
                         &nbsp;
                     </label>

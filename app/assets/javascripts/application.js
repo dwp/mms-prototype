@@ -20,6 +20,11 @@ $(document).ready(function () {
   var showHideContent = new GOVUK.ShowHideContent()
   showHideContent.init()
 
+  if(document.getElementById('selectReducer')) {
+    document.getElementById('selectReducer').addEventListener('change', findSelectedMatches);
+  }
+
+
   // Table search
   if(document.getElementById('searchReducer')) {
     document.getElementById('searchReducer').addEventListener('change', findMatchingRows);
