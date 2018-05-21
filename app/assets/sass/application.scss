@@ -7,6 +7,7 @@ $path: "/public/images/";
 @import 'govuk-elements';
 
 @import 'sections';
+@import 'sidebar';
 @import 'typography';
 @import 'wrappers';
 
@@ -14,6 +15,9 @@ $path: "/public/images/";
 @import 'patterns/check-your-answers';
 @import 'patterns/task-list';
 
+.block-label {
+  display: grid;
+}
 // Related items
 // (These styles will be moved to GOV.UK elements, duplicating here for now.)
 .govuk-related-items {

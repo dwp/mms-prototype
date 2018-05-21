@@ -16,16 +16,16 @@
         {{ forms.textInput('searchReducer', 'Filter list by name', '', false, false, false, false, 'full')}}
         <hr class="dividing-rule">
         {{ forms.selectInput('manageUsersAction', 'Choose an action', [
-            {value: 'createCustomer', label: 'Create new customer'},
             {value: 'amendUser', label: 'Update user details'},
             {value: 'deleteUser', label: 'Delete User'},
             {value: 'reactivateUser', label: 'Reactivate user'}
         ], errors.manageUsersAction, true, false, 'full', false, true) }}
         {{ forms.submitInput('Submit')}}
+        {% include 'templates/partials/sidebar/quicklinksAdmin.njk' %}
     </div>
     <main role="main" class="main-section">
         <div class="grid-row">
-            <form class="form" action="/admin/manage-users" method="post" autocomplete="off">
+            <form class="form" action="/customers" method="post" autocomplete="off">
                 
                 <div class="column-two-thirds">
                     {% if errors %}
@@ -37,11 +37,11 @@
                     {% endif %}
 
                     {{ typography.mainHeading('Manage customers') }}
-                    {{ typography.lede('Remove and amend customers of MMS') }}
+                    {{ typography.lede('Amend customers details') }}
                 </div>
 
                 <div class="column-full">
-                    {{ tables.customerList(customers) }}
+                    {{ tables.customerList('userSelect', customers) }}
                     {{ forms.hiddenInput('_csrf', _csrf) }}
                 </div>
             </form>

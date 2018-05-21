@@ -1,0 +1,97 @@
+.sidebar-input {
+    width: 100%;
+}
+
+.sidebar-quicklinks-wrapper {
+    margin: 2rem 0;
+}
+
+.sidebar-quicklink {
+    border-top: 1px solid $grey-2;
+    color: $text-colour;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: .75rem 0;
+    text-decoration: none;
+}
+
+.sidebar-quicklink:last-of-type {
+    border-bottom: 1px solid $grey-2;
+}
+
+.sidebar-quicklink:link {
+    color: $text-colour;
+    background: none; // prevents highlighting whole block when active
+    border-top: 1px solid $grey-2;
+}
+
+.sidebar-quicklink:visited {
+    color: $text-colour;
+}
+
+.sidebar-quicklink:hover {
+    border-radius: 5px;
+    color: mix($govuk-blue, $white, 80%);
+}
+
+.sidebar-quicklink:active {
+    color: $govuk-blue;
+    background: none !important;
+    border-radius: 5px;
+}
+
+.sidebar-quicklinks-vu-wrapper {
+    margin: -2rem 0rem;
+}
+
+.sidebar-quicklink-vu {
+    border-top: 1px solid $grey-2;
+    color: $text-colour;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: .75rem 0;
+    text-decoration: none;
+    text-indent: 1rem;
+}
+
+.sidebar-quicklink-vu:first-of-type {
+    border-top: none !important;
+}
+
+.sidebar-quicklink-vu:link {
+    color: $text-colour;
+    background: none; // prevents highlighting whole block when active
+    border-top: 1px solid $grey-2;
+}
+
+.sidebar-quicklink-vu:visited {
+    color: $text-colour;
+}
+
+.sidebar-quicklink-vu:hover {
+    border-radius: 5px;
+    color: mix($govuk-blue, $white, 80%);
+}
+
+.sidebar-quicklink-vu:active {
+    color: $govuk-blue;
+    background: none !important;
+    border-radius: 5px;
+}
+
+.sidebar-button-wrapper {
+    text-align: center;
+}
+
+.sidebar-button {
+    width: 80%;
+}
+
+.active-view:link,
+ .active-view:visited,
+ .active-view:active {
+    color: $govuk-blue;
+    background-color: $grey-3;
+}

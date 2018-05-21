@@ -7,17 +7,17 @@
 {% import 'templates/macros/success.njk' as successSummary %}
 
 {% block page_title %}
-    UC Migrate - New customer
+    UC Migrate - Edit customer
 {% endblock %}
 
 {% block content %}
 <div class="flex-wrapper" role="main">
     <div class="side-bar">
+        {% include 'templates/partials/sidebar/quicklinksAdmin.njk' %}
     </div>
-
     <main role="main" class="main-section">
         <div class="grid-row">
-          <form class="form" action="/create-customer" method="POST">
+          <form class="form" action="/edit-customer/{{ customer.nino }}" method="POST">
                 <div class="column-two-thirds">
                     {% if errors %}
                     {{ errorSummary.errorSummary(errors) }}
@@ -27,17 +27,18 @@
                     {{ successSummary.successSummary(successes) }}
                     {% endif %}
 
-                    {{ typography.mainHeading('New Customer') }}
-                    {{ typography.lede('Add the details of a new customer') }}
+                    {{ typography.mainHeading('Edit Customer') }}
+                    {{ typography.lede('View/Update the details of an existing customer') }}
+                    {{ errors | dump }}
                 </div>
                 <div class="column-two-thirds">
-                    {{ forms.textInput('lastName', 'Last name', '', false, false, false, false, 'full')}}
-                    {{ forms.textInput('firstName', 'First name', '', false, false, false, false, 'full')}}
-                    {{ forms.textInput('nino', 'NiNo', '', false, false, false, false, 'full')}}
-                    {{ forms.textInput('phone', 'Phone', '', false, false, false, false, 'full')}}
-                    {{ forms.textInput('street', 'Street', '', false, false, false, false, 'full')}}
-                    {{ forms.textInput('city', 'City', '', false, false, false, false, 'full')}}
-                    {{ forms.textInput('county', 'County', '', false, false, false, false, 'full')}}
+                    {{ forms.textInput('lastName', 'lastName', customer.lastName, '' , true, false, true, false) }}
+                    {{ forms.textInput('firstName', 'First name', customer.firstName, '', true, false, true, false)}}
+                    {{ forms.textInput('nino', 'NiNo', customer.nino, '', true, false, true, false)}}
+                    {{ forms.textInput('phone', 'Phone', customer.phone)}}
+                    {{ forms.textInput('street', 'Street', customer.address.street)}}
+                    {{ forms.textInput('city', 'City', customer.address.city)}}
+                    {{ forms.textInput('county', 'County', customer.address.county)}}
                     {{ forms.submitInput('Submit') }}
                 </div>
           </form>

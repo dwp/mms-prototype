@@ -11,12 +11,27 @@ router.get('/', function (req, res) {
 
 // Add your routes here - above the module.exports line
 
+// View all customers
 router.get('/customers', function (req, res) {
   res.locals.customers = data
   res.render('customers')
 })
 
-router.post('/create-customer', (req, res) => {
+// Amend existing customer
+router.post('/edit-customer/:nino', (req, res) => {
+  res.locals.customers = data
+  res.redirect('/customers')
+})
+
+router.get('/edit-customer/:nino', (req, res) => {
+  res.locals.customers = data;
+  const customerToEdit = data.filter(customer => customer.nino === req.params.nino)
+  res.locals.customer = customerToEdit[0]
+  res.render('edit-customer')
+})
+
+// Create a new customer
+router.post('/new-customer', (req, res) => {
   const newItem = Object.assign({
     lastName: req.body.lastName,
     firstName: req.body.firstName,
