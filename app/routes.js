@@ -19,8 +19,19 @@ router.get('/customers', function (req, res) {
 
 // Amend existing customer
 router.post('/edit-customer/:nino', (req, res) => {
-  res.locals.customers = data
-  res.redirect('/customers')
+  res.locals.customers = data;
+  let customerToEdit = data.filter(customer => customer.nino === req.params.nino)
+  customerToEdit[0].phone = req.body.phone;
+  customerToEdit[0].address = {
+    street: req.body.street,
+    city: req.body.city,
+    county: req.body.county
+  }
+  fs.writeFile('app/mock-data.json', JSON.stringify(data, null, 2), (err) => {
+    if (err) throw err;
+    console.log('Saved!');
+  });
+  res.redirect('/customers');
 })
 
 router.get('/edit-customer/:nino', (req, res) => {
@@ -44,7 +55,7 @@ router.post('/new-customer', (req, res) => {
     }
   })
   data.push(newItem)  
-  fs.writeFile('app/mock-data.json', JSON.stringify(data,null,2), (err) => {
+  fs.writeFile('app/mock-data.json', JSON.stringify(data, null, 2), (err) => {
     if (err) throw err;
     console.log('Saved!');
   });
