@@ -13,11 +13,20 @@
     </thead>
     <tbody id="searchableTable">
     {% for customer in customers %}
-        <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}" data-search="{{ customer.lastName }} {{ customer.firstName }}">
+        <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}"
+            data-search="{{ customer.lastName }} {{ customer.firstName }} {{ customer.nino }}"
+        >
             <td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
                 <div class="multiple-choice">
-                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ customer._id }}"
-                    {% if customer.target %} data-target="{{ customer.target }}"{% endif %}>
+                    <input
+                        id="{{ id }}-{{ loop.index }}"
+                        class="multi-select-checkbox"
+                        type="checkbox" name="{{ id }}" 
+                        value="{{ customer.nino }}"
+                        {% if customer.nino %} 
+                            data-target="{{ customer.nino }}"
+                        {% endif %}
+                    >
                     <label for="{{ id }}-{{ loop.index }}" aria-label="{{ customer.lastName }}">
                         &nbsp;
                     </label>
@@ -32,13 +41,13 @@
             <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
                 {{ customer.phone }}
             </td>
-            <td class="table-click-helper">
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
                 {{ customer.address.street }}
             </td>
-            <td class="table-click-helper">
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
                 {{ customer.address.city }}
             </td>
-            <td class="table-click-helper">
+            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
                 {{ customer.address.county }}
             </td>
         </tr>
@@ -46,40 +55,4 @@
     </tbody>
 </table>
 
-{% endmacro %}
-
-
-{% macro userManagement(id, members, additionalField) %}
-<table class="user-management-table">
-    <thead>
-        <tr>
-            <th class="reduced-column"></th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>{{ additionalField }}</th>
-        </tr>
-    </thead>
-    <tbody id="searchableTable">
-    {% for member in members %}
-        <tr class="drag-to-select" data-click="{{ id }}-{{ loop.index }}" data-search="{{ member.name }}" data-role="{% if 'Case Manager' in member.roles and 'Line Manager' in member.roles %}Deputy{% elif member.roles[0] === 'Admin'%}Administrator{% else %}{{ member.roles[0] }}{% endif %}">
-            <td class="reduced-column" data-click="{{ id }}-{{ loop.index }}" >
-                <div class="multiple-choice">
-                    <input id="{{ id }}-{{ loop.index }}" class="multi-select-checkbox" type="checkbox" name="{{ id }}" value="{{ member._id }}"
-                    {% if member.target %} data-target="{{ member.target }}"{% endif %}>
-                    <label for="{{ id }}-{{ loop.index }}" aria-label="{{ member.name }}">&nbsp;</label>
-                </div>
-            </td>
-            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">{{ member.name }}</td>
-            <td class="table-click-helper" data-checkbox="{{ id }}-{{ loop.index }}">
-                {% if 'Case Manager' in member.roles and 'Line Manager' in member.roles %}
-                    Deputy
-                {% else %}
-                    {{ member.roles[0] }}
-                {% endif %}
-            </td>
-            <td{% if member[additionalField]  %} class="table-click-helper"{% endif %} data-checkbox="{{ id }}-{{ loop.index }}">{% if member[additionalField]  %}{{ member[additionalField] }}{% else %}<a class="user-cases-link" href="/lm/view-cm-cases?user={{ member._id }}">view cases</a>{% endif %}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
 {% endmacro %}

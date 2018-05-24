@@ -17,6 +17,12 @@ router.get('/customers', function (req, res) {
   res.render('customers')
 })
 
+// View customer details
+router.post('/customers', function (req, res) {
+  const customerToEdit = req.body.userSelect[0];
+  res.redirect(`/edit-customer/${ customerToEdit }`)
+})
+
 // Amend existing customer
 router.post('/edit-customer/:nino', (req, res) => {
   res.locals.customers = data;

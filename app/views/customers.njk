@@ -7,26 +7,25 @@
 {% import 'templates/macros/success.njk' as successSummary %}
 
 {% block page_title %}
-    UC Migrate - Manage customers
+    UC Migrate - Manage claimants
 {% endblock %}
 
 {% block content %}
 <div class="flex-wrapper" role="main">
-	<div class="side-bar">
-        {{ forms.textInput('searchReducer', 'Filter list by name', '', false, false, false, false, 'full')}}
-        <hr class="dividing-rule">
-        {{ forms.selectInput('manageUsersAction', 'Choose an action', [
-            {value: 'amendUser', label: 'Update user details'},
-            {value: 'deleteUser', label: 'Delete User'},
-            {value: 'reactivateUser', label: 'Reactivate user'}
-        ], errors.manageUsersAction, true, false, 'full', false, true) }}
-        {{ forms.submitInput('Submit')}}
-        {% include 'templates/partials/sidebar/quicklinksAdmin.njk' %}
-    </div>
-    <main role="main" class="main-section">
-        <div class="grid-row">
-            <form class="form" action="/customers" method="post" autocomplete="off">
-                
+    <form class="form" action="/customers" method="post" autocomplete="off">
+        <div class="side-bar">
+            {{ forms.textInput('searchReducer', 'Filter list by name', '', false, false, false, false, 'full')}}
+            <hr class="dividing-rule">
+            {{ forms.selectInput('manageUsersAction', 'Choose an action', [
+                {value: 'amendUser', label: 'Update user details'},
+                {value: 'deleteUser', label: 'Delete User'},
+                {value: 'reactivateUser', label: 'Reactivate user'}
+            ], errors.manageUsersAction, true, false, 'full', false, true) }}
+            {{ forms.submitInput('Submit')}}
+            {% include 'templates/partials/sidebar/quicklinksAdmin.njk' %}
+        </div>
+        <main role="main" class="main-section">
+            <div class="grid-row">
                 <div class="column-two-thirds">
                     {% if errors %}
                     {{ errorSummary.errorSummary(errors) }}
@@ -36,17 +35,15 @@
                     {{ successSummary.successSummary(successes) }}
                     {% endif %}
 
-                    {{ typography.mainHeading('Manage customers') }}
-                    {{ typography.lede('Amend customers details') }}
+                    {{ typography.mainHeading('Manage claimants') }}
+                    {{ typography.lede('Amend claimant details') }}
                 </div>
 
                 <div class="column-full">
                     {{ tables.customerList('userSelect', customers) }}
-                    {{ forms.hiddenInput('_csrf', _csrf) }}
                 </div>
-            </form>
-        </div>
-    </main>
-
+            </div>
+        </main>
+    </form>
 </div>
 {% endblock %}

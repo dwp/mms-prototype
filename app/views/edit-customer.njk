@@ -7,17 +7,17 @@
 {% import 'templates/macros/success.njk' as successSummary %}
 
 {% block page_title %}
-    UC Migrate - Edit customer
+    UC Migrate - Edit claimant
 {% endblock %}
 
 {% block content %}
 <div class="flex-wrapper" role="main">
-    <div class="side-bar">
-        {% include 'templates/partials/sidebar/quicklinksAdmin.njk' %}
-    </div>
-    <main role="main" class="main-section">
-        <div class="grid-row">
-          <form class="form" action="/edit-customer/{{ customer.nino }}" method="POST">
+    <form class="form" action="/edit-customer/{{ customer.nino }}" method="POST">
+        <div class="side-bar">
+            {% include 'templates/partials/sidebar/quicklinksAdmin.njk' %}
+        </div>
+        <main role="main" class="main-section">
+            <div class="grid-row">
                 <div class="column-two-thirds">
                     {% if errors %}
                     {{ errorSummary.errorSummary(errors) }}
@@ -27,8 +27,8 @@
                     {{ successSummary.successSummary(successes) }}
                     {% endif %}
 
-                    {{ typography.mainHeading('Edit Customer') }}
-                    {{ typography.lede('View/Update the details of an existing customer') }}
+                    {{ typography.mainHeading('Edit Claimant') }}
+                    {{ typography.lede('View/Update the details of an existing claimant') }}
                     {{ errors | dump }}
                 </div>
                 <div class="column-two-thirds">
@@ -41,9 +41,8 @@
                     {{ forms.textInput('county', 'County', customer.address.county)}}
                     {{ forms.submitInput('Submit') }}
                 </div>
-          </form>
-        </div>
-    </main>
-
+            </div>
+        </main>
+    </form>
 </div>
 {% endblock %}
